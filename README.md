@@ -1,4 +1,4 @@
-CQ5 oEmbed Component
+AEM oEmbed Component
 ====================
 
 This is an [oEmbed](http://oembed.com/) component for [Adobe AEM](http://www.adobe.com/solutions/web-experience-management.html).
@@ -12,7 +12,7 @@ Installation
 To install the component:
 
 * Grab a copy of the source by either cloning the git repository or [downloading a zip file](https://github.com/ugocei/oembed/archive/master.zip).
-* Build and install the component into your CQ5 instance using [Apache Maven](http://maven.apache.org/):
+* Build and install the component into your AEM instance using [Apache Maven](http://maven.apache.org/):
 
    mvn -P installPackage install
 
