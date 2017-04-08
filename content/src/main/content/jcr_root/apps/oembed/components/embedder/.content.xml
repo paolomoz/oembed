@@ -4,4 +4,25 @@
     jcr:title="OEmbed"
     sling:resourceSuperType="foundation/components/parbase"
     allowedParents="[*/parsys]"
-    componentGroup="General"/>
+    componentGroup="General">
+    <cq:htmlTag jcr:primaryType="nt:unstructured" cq:tagName="div" class="cmp cmp-oembed"/>
+    <cq:editConfig jcr:primaryType="nt:unstructured">
+      <cq:inplaceEditing jcr:primaryType="nt:unstructured" active="false"/>
+    </cq:editConfig>
+    <cq:dialog jcr:primaryType="nt:unstructured" jcr:title="OEmbed" sling:resourceType="cq/gui/components/authoring/dialog">
+      <content jcr:primaryType="nt:unstructured" sling:resourceType="granite/ui/components/coral/foundation/fixedcolumns">
+        <items jcr:primaryType="nt:unstructured">
+          <column jcr:primaryType="nt:unstructured" sling:resourceType="granite/ui/components/coral/foundation/container">
+            <items jcr:primaryType="nt:unstructured">
+              <url
+                    jcr:primaryType="nt:unstructured"
+                    fieldDescription="URL of a page that supports oEmbed auto-discovery (e.g. YouTube)"
+                    fieldLabel="Web page address"
+                    name="./webpage"
+                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"/>
+            </items>
+          </column>
+        </items>
+      </content>
+    </cq:dialog>
+  </jcr:root>

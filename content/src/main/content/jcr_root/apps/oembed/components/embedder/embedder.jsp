@@ -38,6 +38,6 @@
 	        break;
 	    }
     } else {
-%><p style="border"><img src="/libs/cq/ui/resources/0.gif" class="cq-text-placeholder" alt=""></p><%
+%><p style="border">Please configure OEmbed URL</p><%
     }
 %></div>
