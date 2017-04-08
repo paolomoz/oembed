@@ -13,8 +13,8 @@ To install the component:
 
 * Grab a copy of the source by either cloning the git repository or [downloading a zip file](https://github.com/ugocei/oembed/archive/master.zip).
 * Build and install the component into your AEM instance using [Apache Maven](http://maven.apache.org/):
-
-   mvn -P installPackage install
-
+```
+mvn -P installPackage install
+```
 * Enable the component for your page in [design view](http://dev.day.com/docs/en/cq/current/wcm/working_with_cq_wcm/using_edit_designandpreviewmodes.html#Design Mode).
 
