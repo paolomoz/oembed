@@ -21,17 +21,17 @@ public class OEmbedTest {
 		OEmbedRenderer renderer = new OEmbedRenderer();
 		renderer.fetchResponse(endpoint, url, 240, 180);
 		assertEquals(OEmbedType.PHOTO, renderer.getType());
-		assertEquals("http://farm4.staticflickr.com/3040/2362225867_4a87ab8baf_m.jpg", renderer.getURL());
+		assertEquals("https://farm4.staticflickr.com/3040/2362225867_4a87ab8baf_m.jpg", renderer.getURL());
 		assertEquals(240, renderer.getWidth());
 		assertEquals(180, renderer.getHeight());
 	}
 
 	@Test
-	public void testVideo() {
-		String endpoint = "http://www.youtube.com/oembed";
-		String url = "http://www.youtube.com/watch?v=-UUx10KOWIE";
+	public void testDiscoverVideo() {
+		String url = "https://www.youtube.com/watch?v=9bZkp7q19f0";
 		OEmbedRenderer renderer = new OEmbedRenderer();
-		renderer.fetchResponse(endpoint, url, null, null);
+    assertTrue(renderer.discoverLink(url));
+		//renderer.fetchResponse(endpoint, url, null, null);
 		assertEquals(OEmbedType.VIDEO, renderer.getType());
 		System.out.println(renderer.getHTML());
 	}
@@ -54,7 +54,7 @@ public class OEmbedTest {
 		OEmbedRenderer renderer = new OEmbedRenderer();
 		assertTrue(renderer.discoverLink(url));
 		assertEquals(OEmbedType.PHOTO, renderer.getType());
-		assertEquals("http://farm4.staticflickr.com/3040/2362225867_4a87ab8baf_b.jpg", renderer.getURL());
+		assertEquals("https://farm4.staticflickr.com/3040/2362225867_4a87ab8baf_b.jpg", renderer.getURL());
 		assertEquals(1024, renderer.getWidth());
 		assertEquals(768, renderer.getHeight());
 	}
