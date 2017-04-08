@@ -35,6 +35,14 @@ public class OEmbedTest {
 		assertEquals(OEmbedType.VIDEO, renderer.getType());
 		System.out.println(renderer.getHTML());
 	}
+  
+  @Test
+  public void testDefaultFallback() {
+    String url = "https://gfycat.com/WindyHiddenGemsbok";
+    OEmbedRenderer renderer = new OEmbedRenderer();
+    assertTrue(renderer.discoverLink(url));
+    System.out.println(renderer.getHTML());
+  }
 	
 	@Test
 	public void testReadLinks() throws Exception {

@@ -25,6 +25,7 @@ public class OEmbedRenderer {
 	private HttpClient client = new HttpClient();
 	private LinkFinder linkFinder = new LinkFinder();
 	private final Logger logger = LoggerFactory. getLogger(OEmbedRenderer.class);
+  public static String DEFAULT_ENDPOINT = "http://noembed.com/embed";
 
 	public boolean discoverLink(String url) {
 		HttpMethod method = null;
@@ -35,7 +36,7 @@ public class OEmbedRenderer {
 	    	InputStream input = method.getResponseBodyAsStream();
 	    	List<Link> links = linkFinder.findLinks(input);
 	    	if (links.isEmpty()) {
-	    		return false;
+          return fetchResponse(OEmbedRenderer.DEFAULT_ENDPOINT, url, null, null);
 	    	}
 	    	return fetchResponse(links.get(0).getUri());
 		} catch (IOException e) {
