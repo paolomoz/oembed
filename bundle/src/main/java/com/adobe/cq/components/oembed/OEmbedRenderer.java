@@ -17,8 +17,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.xml.sax.SAXException;
 
+import org.apache.felix.scr.annotations.*;
 
-public class OEmbedRenderer {
+@Component(immediate = true,metatype=true)
+@Service(NamingService.class)
+public class OEmbedRenderer implements OEmbedLookup {
 
 
 	private JSONObject data;
@@ -26,6 +29,9 @@ public class OEmbedRenderer {
 	private LinkFinder linkFinder = new LinkFinder();
 	private final Logger logger = LoggerFactory. getLogger(OEmbedRenderer.class);
   public static String DEFAULT_ENDPOINT = "http://noembed.com/embed";
+  
+  @Property(value={"http://noembed.com/embed"}, unbounded = PropertyUnbounded.ARRAY, label = "OEmbed Lookup endpoints", cardinality = 50, description = "Enter additional URLs to look up OEmbed configurations.")
+  private static final String ENDPOINTS = "multifield";
 
 	public boolean discoverLink(String url) {
 		HttpMethod method = null;
