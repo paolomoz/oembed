@@ -24,6 +24,7 @@ public class OEmbedLinkHandler extends DefaultHandler {
   private String canonical;
   
   private boolean recordTitle = false;
+  private StringBuffer titleRecorder;
 
     /**
      * Returns the list of collected links.
@@ -36,6 +37,10 @@ public class OEmbedLinkHandler extends DefaultHandler {
     
     public boolean hasCard() {
       return this.card;
+    }
+    
+    public boolean hasTitle() {
+      return this.title != null;
     }
     
     public String getTitle() {
@@ -83,9 +88,24 @@ public class OEmbedLinkHandler extends DefaultHandler {
           this.image = metaContent;
           this.card = true;
         } 
-			} else if ("title".equals(local)&&this.title!=null) {
+			} else if ("title".equals(local)&&this.title==null) {
         this.recordTitle = true;
+        this.titleRecorder = new StringBuffer();
 			}
 		}
 	}
+  
+  public void endElement(String uri, String localName, String qName) {
+    if(XHTML.equals(uri)&&"title".equals(localName)&&recordTitle) {
+      recordTitle = false;
+      this.title = this.titleRecorder.toString();
+      this.titleRecorder = null;
+    }
+  }
+  
+  public void characters(char[] ch, int start, int length) {
+    if (this.titleRecorder!=null&&this.recordTitle) {
+      this.titleRecorder.append(new String(ch, start, length));
+    }
+  }
 }

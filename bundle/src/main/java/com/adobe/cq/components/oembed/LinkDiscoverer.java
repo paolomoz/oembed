@@ -26,6 +26,7 @@ public class LinkDiscoverer {
 	private LinkFinder linkFinder = new LinkFinder();
 	private final Logger logger = LoggerFactory. getLogger(LinkDiscoverer.class);
   private List<String> endpoints;
+  private String title;
   
   public LinkDiscoverer(List<String> endpoints) {
     this.endpoints = endpoints;
@@ -68,7 +69,12 @@ public class LinkDiscoverer {
             this.card = this.linkFinder.getLinkHandler();
             System.out.println("Hey, I've found a Twitter card!");
             return true;
+          } else if (this.linkFinder.getLinkHandler().hasTitle()) {
+            //last fallback: just use the title tag
+            this.title = this.linkFinder.getLinkHandler().getTitle();
+            return true;
           }
+          
           return false;
 	    	} else {
           //an OEmbed link has been found, so we will use this one.
@@ -135,6 +141,8 @@ public class LinkDiscoverer {
 		try {
       if (this.card!=null) {
         return OEmbedType.CARD;
+      } else if (this.title!=null) {
+        return OEmbedType.PLAIN;
       }
 			return OEmbedType.valueOf(data.getString("type").toUpperCase());
 		} catch (JSONException e) {
@@ -146,6 +154,8 @@ public class LinkDiscoverer {
 	public String getTitle() {
     if (this.card!=null) {
       return this.card.getTitle();
+    } else if (this.title!=null) {
+      return this.title;
     }
 		try {
 			return data.has("title") ? data.getString("title") : null; 

@@ -39,6 +39,8 @@
               <p class="oembed-card-description"><a href="<%=url %>" class="oembed-card-link oembed-card-description-link"><%=renderer.getHTML() %></a></p>
             </div>
           <%
+        } else if (renderer.getType()==OEmbedType.PLAIN) {
+          %><a href="<%=url %>" class="oembed-plain-link"><%=renderer.getTitle() %></a><%
         } else {
           %>trying to embed this stuff <%=renderer.getType() %><%
         }
