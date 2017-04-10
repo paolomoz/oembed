@@ -5,6 +5,7 @@ import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpMethod;
@@ -18,9 +19,11 @@ import org.slf4j.LoggerFactory;
 import org.xml.sax.SAXException;
 
 import org.apache.felix.scr.annotations.*;
+import org.apache.sling.commons.osgi.PropertiesUtil;
+import org.osgi.service.component.ComponentContext;
 
 @Component(immediate = true,metatype=true)
-@Service(NamingService.class)
+@Service(OEmbedLookup.class)
 public class OEmbedRenderer implements OEmbedLookup {
 
 
@@ -31,7 +34,22 @@ public class OEmbedRenderer implements OEmbedLookup {
   public static String DEFAULT_ENDPOINT = "http://noembed.com/embed";
   
   @Property(value={"http://noembed.com/embed"}, unbounded = PropertyUnbounded.ARRAY, label = "OEmbed Lookup endpoints", cardinality = 50, description = "Enter additional URLs to look up OEmbed configurations.")
-  private static final String ENDPOINTS = "multifield";
+  private static final String ENDPOINTS = "endpoints";
+  private String[] endpoints;
+  
+  @Activate
+  protected void activate(@SuppressWarnings("rawtypes") final Map context) {
+    this.endpoints = PropertiesUtil.toStringArray(context.get(ENDPOINTS));
+  }
+  
+  @Modified
+  protected void modified(ComponentContext context) {
+    this.endpoints = PropertiesUtil.toStringArray(context.getProperties().get(ENDPOINTS));
+  }
+  
+  public String[] getOEmbedEndpoints() {
+    return this.endpoints;
+  }
 
 	public boolean discoverLink(String url) {
 		HttpMethod method = null;
