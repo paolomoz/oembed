@@ -50,7 +50,10 @@ public class OEmbedRenderer implements OEmbedLookup {
   public String[] getOEmbedEndpoints() {
     return this.endpoints;
   }
-
+  /**
+   * Attempts to find a OEmbed link through auto-discovery, then falls back to
+   * the configured endpoints.
+   */
 	public boolean discoverLink(String url) {
 		HttpMethod method = null;
         try {
@@ -60,9 +63,16 @@ public class OEmbedRenderer implements OEmbedLookup {
 	    	InputStream input = method.getResponseBodyAsStream();
 	    	List<Link> links = linkFinder.findLinks(input);
 	    	if (links.isEmpty()) {
-          return fetchResponse(OEmbedRenderer.DEFAULT_ENDPOINT, url, null, null);
-	    	}
-	    	return fetchResponse(links.get(0).getUri());
+          for (String endpoint : this.endpoints) {
+            boolean found = fetchResponse(OEmbedRenderer.DEFAULT_ENDPOINT, url, null, null);
+            if (found) {
+              return true;
+            }
+          }
+          return false;
+	    	} else {
+	    	  return fetchResponse(links.get(0).getUri());
+        }
 		} catch (IOException e) {
 			throw new OEmbedException(e);
 		} catch (SAXException e) {
