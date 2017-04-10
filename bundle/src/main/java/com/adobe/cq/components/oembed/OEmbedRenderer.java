@@ -29,6 +29,7 @@ public class OEmbedRenderer implements OEmbedLookup {
 
 
 	private JSONObject data;
+  private OEmbedLinkHandler card;
 	private HttpClient client = new HttpClient();
 	private LinkFinder linkFinder = new LinkFinder();
 	private final Logger logger = LoggerFactory. getLogger(OEmbedRenderer.class);
@@ -72,20 +73,33 @@ public class OEmbedRenderer implements OEmbedLookup {
 	    	method.setFollowRedirects(true);
 	    	client.executeMethod(method);
 	    	InputStream input = method.getResponseBodyAsStream();
+        //first of all, parse the document
 	    	List<Link> links = linkFinder.findLinks(input);
+        //if no OEmbed links have been found, try the configured OEmbed providers, one by one
 	    	if (links.isEmpty()) {
-          System.out.println("Finding endpoints. " + this.endpoints.size() + " endpoints configured");
-          for (String endpoint : this.endpoints) {
-            System.out.println("Trying " + endpoint);
-            boolean found = fetchResponse(endpoint, url, null, null);
-            
-            if (found) {
-              System.out.println(endpoint + " found");
-              return true;
+          if (this.endpoints!=null) {
+            System.out.println("Finding endpoints. " + this.endpoints.size() + " endpoints configured");
+            for (String endpoint : this.endpoints) {
+              System.out.println("Trying " + endpoint);
+              boolean found = fetchResponse(endpoint, url, null, null);
+              
+              if (found) {
+                System.out.println(endpoint + " found");
+                return true;
+              }
             }
+          } else {
+            System.out.println("No OEmbed endpoints configured");
+          }
+          //if no OEmbed representation can be found, try Twitter cards or Open Graph meta tags
+          if (this.linkFinder.getLinkHandler().hasCard()) {
+            this.card = this.linkFinder.getLinkHandler();
+            System.out.println("Hey, I've found a Twitter card!");
+            return true;
           }
           return false;
 	    	} else {
+          //an OEmbed link has been found, so we will use this one.
 	    	  return fetchResponse(links.get(0).getUri());
         }
 		} catch (IOException e) {
@@ -147,6 +161,9 @@ public class OEmbedRenderer implements OEmbedLookup {
 
 	public OEmbedType getType() {
 		try {
+      if (this.card!=null) {
+        return OEmbedType.CARD;
+      }
 			return OEmbedType.valueOf(data.getString("type").toUpperCase());
 		} catch (JSONException e) {
       logger.warn("No 'type' attribute in JSON input " + data.toString());
@@ -155,6 +172,9 @@ public class OEmbedRenderer implements OEmbedLookup {
 	}
 	
 	public String getTitle() {
+    if (this.card!=null) {
+      return this.card.getTitle();
+    }
 		try {
 			return data.has("title") ? data.getString("title") : null; 
 		} catch (JSONException e) {
@@ -163,6 +183,9 @@ public class OEmbedRenderer implements OEmbedLookup {
 	}
 	
 	public String getURL() {
+    if (this.card!=null) {
+      return this.card.getCanonicalURL();
+    }
 		try {
 			return data.has("url") ? data.getString("url") : null; 
 		} catch (JSONException e) {
@@ -171,6 +194,9 @@ public class OEmbedRenderer implements OEmbedLookup {
 	}
 	
 	public String getHTML() {
+    if (this.card!=null) {
+      return this.card.getDescription();
+    }
 		try {
 			return data.has("html") ? data.getString("html") : null; 
 		} catch (JSONException e) {
@@ -227,6 +253,9 @@ public class OEmbedRenderer implements OEmbedLookup {
 	}
 	
 	public String getThumbnailURL() {
+    if (this.card!=null) {
+      return this.card.getImageURL();
+    }
 		try {
 			return data.has("thumbnail_url") ? data.getString("thumbnail_url") : null; 
 		} catch (JSONException e) {

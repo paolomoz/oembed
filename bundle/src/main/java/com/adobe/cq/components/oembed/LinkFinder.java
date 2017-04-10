@@ -13,13 +13,19 @@ import org.xml.sax.SAXException;
 
 public class LinkFinder {
 
+  private OEmbedLinkHandler linkHandler;
+  
 	public List<Link> findLinks(InputStream input) throws IOException, SAXException, TikaException {
-		OEmbedLinkHandler linkHandler = new OEmbedLinkHandler();
+		this.linkHandler = new OEmbedLinkHandler();
 		Metadata metadata = new Metadata();
 		ParseContext parseContext = new ParseContext();
 		HtmlParser parser = new HtmlParser();
 		parser.parse(input, linkHandler, metadata, parseContext);
 		return linkHandler.getLinks();
 	}
+  
+  public OEmbedLinkHandler getLinkHandler() {
+    return this.linkHandler;
+  }
 	
 }

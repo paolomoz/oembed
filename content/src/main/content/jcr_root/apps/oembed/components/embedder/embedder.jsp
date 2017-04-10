@@ -18,12 +18,18 @@
       if ((!found||renderer.getType()==null)&&isEdit) {
         %><strong class="error">URL <%=url %> cannot be embedded.</strong><%
       } else if (found&&renderer.getType()!=null) {
-        if (renderer.getType()==OEmbedType.RICH) {
+        if (renderer.getType()==OEmbedType.RICH||renderer.getType()==OEmbedType.VIDEO) {
           %>
             <div class="oembed-rich">
               <%= renderer.getHTML() %>
             </div>
           <%
+        } else if (renderer.getType()==OEmbedType.PHOTO) {
+          int width = renderer.getWidth();
+          int height = renderer.getHeight();
+          String photoUrl = renderer.getURL();
+          String title = renderer.getTitle();
+          %><img src="<%= photoUrl %>" width="<%= width %>" height="<%= height %>" title="<%= title %>"/><%
         } else {
           %>trying to embed this stuff<%
         }

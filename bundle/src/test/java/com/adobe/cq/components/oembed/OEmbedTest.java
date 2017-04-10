@@ -84,6 +84,18 @@ public class OEmbedTest {
 				link.getUri());
 		
 	}
+  
+  @Test
+  public void testTwitterCards() throws Exception {
+    String url = "http://www.spiegel.de/wissenschaft/natur/great-barrier-reef-zwei-drittel-der-korallen-drohen-abzusterben-a-1142645.html";
+    OEmbedRenderer renderer = new OEmbedRenderer();
+    try {
+      assertTrue(renderer.discoverLink(url));
+    } catch (Exception e) {
+      e.printStackTrace();
+      fail("Can't");
+    }
+  }
 
 	@Test
 	public void testDiscoverPhoto() {
