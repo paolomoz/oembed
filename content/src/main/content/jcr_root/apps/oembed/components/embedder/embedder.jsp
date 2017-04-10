@@ -5,6 +5,7 @@
 --%><%
 %><%@include file="/libs/foundation/global.jsp"%><%
 %><%@page import="com.adobe.cq.components.oembed.OEmbedRenderer,
+  com.adobe.cq.components.oembed.LinkDiscoverer,
   com.adobe.cq.components.oembed.OEmbedType,
   com.day.cq.wcm.api.WCMMode" %><%
     
@@ -13,7 +14,7 @@
     if ((url==null||url.length()==0)&&isEdit) {
       %><strong class="error">Please configure the URL to embed</strong><%
     } else {
-      OEmbedRenderer renderer = (OEmbedRenderer) sling.getService(com.adobe.cq.components.oembed.OEmbedLookup.class);
+      LinkDiscoverer renderer = ((OEmbedRenderer) sling.getService(com.adobe.cq.components.oembed.OEmbedLookup.class)).getLinkDiscoverer();
       boolean found = renderer.discoverLink(url);
       if ((!found||renderer.getType()==null)&&isEdit) {
         %><strong class="error">URL <%=url %> cannot be embedded.</strong><%
@@ -33,13 +34,13 @@
         } else if (renderer.getType()==OEmbedType.CARD) {
           %>
             <div class="oembed-card">
-              <a href="<%=webpage %>" class="oembed-card-link oembed-card-image-link"><img class="oembed-card-image" src="<%=renderer.getThumbnailURL() %>"></a>
-              <h2 class="oembed-card-title"><a href="<%=webpage %>" class="oembed-card-link oembed-card-title-link"><%=renderer.getTitle() %></a></h2>
-              <p class="oembed-card-description"><a href="<%=webpage %>" class="oembed-card-link oembed-card-description-link"><%=renderer.getDescription() %></a></p>
+              <a href="<%=url %>" class="oembed-card-link oembed-card-image-link"><img class="oembed-card-image" src="<%=renderer.getThumbnailURL() %>"></a>
+              <h2 class="oembed-card-title"><a href="<%=url %>" class="oembed-card-link oembed-card-title-link"><%=renderer.getTitle() %></a></h2>
+              <p class="oembed-card-description"><a href="<%=url %>" class="oembed-card-link oembed-card-description-link"><%=renderer.getHTML() %></a></p>
             </div>
           <%
         } else {
-          %>trying to embed this stuff<%
+          %>trying to embed this stuff <%=renderer.getType() %><%
         }
       }
     }
