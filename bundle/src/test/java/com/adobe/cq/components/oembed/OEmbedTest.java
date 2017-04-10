@@ -41,7 +41,35 @@ public class OEmbedTest {
     String url = "https://gfycat.com/WindyHiddenGemsbok";
     OEmbedRenderer renderer = new OEmbedRenderer();
     assertTrue(renderer.discoverLink(url));
+    assertEquals(OEmbedType.VIDEO, renderer.getType());
     System.out.println(renderer.getHTML());
+  }
+  
+  @Test
+  public void testFallback() {
+    String url = "https://github.com/trieloff/github-oembed/blob/master/oembed.js";
+    OEmbedRenderer renderer = new OEmbedRenderer();
+    assertTrue(renderer.fetchResponse("https://runtime-preview.adobe.io/github.com/trieloff/github-oembed/master/github-oembed/embed", url, null, null));
+    assertEquals(OEmbedType.RICH, renderer.getType());
+    System.out.println(renderer.getHTML());
+  }
+  
+  @Test
+  public void testDefaultDiscovery() {
+    String url = "https://gist.github.com/trieloff/013509c40db9860746fe3977acadb676";
+    OEmbedRenderer renderer = new OEmbedRenderer();
+    renderer.setOEmbedEndpoints(new String[] {"https://runtime-preview.adobe.io/github.com/trieloff/github-oembed/master/github-oembed/embed"});
+    assertTrue(renderer.discoverLink(url));
+    assertEquals(OEmbedType.RICH, renderer.getType());
+  }
+  
+  @Test
+  public void testDefaultDiscoveryGist() {
+    String url = "https://github.com/trieloff/github-oembed/blob/master/oembed.js";
+    OEmbedRenderer renderer = new OEmbedRenderer();
+    renderer.setOEmbedEndpoints(new String[] {"https://runtime-preview.adobe.io/github.com/trieloff/github-oembed/master/github-oembed/embed"});
+    assertTrue(renderer.discoverLink(url));
+    assertEquals(OEmbedType.RICH, renderer.getType());
   }
 	
 	@Test
