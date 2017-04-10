@@ -23,8 +23,8 @@ mvn -P installPackage install
 * Enable the component for your page in [design view](http://dev.day.com/docs/en/cq/current/wcm/working_with_cq_wcm/using_edit_designandpreviewmodes.html#Design Mode).
 
 ## Todo
-[ ] white list of sites in design configuration
-[ ] screen shots of embedded sites
+- [ ] white list of sites in design configuration
+- [ ] screen shots of embedded sites
 
 ## Thanks
 * [Paolo](https://github.com/paolomoz/oembed)
