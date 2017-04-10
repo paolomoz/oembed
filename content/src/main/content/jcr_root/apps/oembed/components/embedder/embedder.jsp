@@ -30,6 +30,14 @@
           String photoUrl = renderer.getURL();
           String title = renderer.getTitle();
           %><img src="<%= photoUrl %>" width="<%= width %>" height="<%= height %>" title="<%= title %>"/><%
+        } else if (renderer.getType()==OEmbedType.CARD) {
+          %>
+            <div class="oembed-card">
+              <a href="<%=webpage %>" class="oembed-card-link oembed-card-image-link"><img class="oembed-card-image" src="<%=renderer.getThumbnailURL() %>"></a>
+              <h2 class="oembed-card-title"><a href="<%=webpage %>" class="oembed-card-link oembed-card-title-link"><%=renderer.getTitle() %></a></h2>
+              <p class="oembed-card-description"><a href="<%=webpage %>" class="oembed-card-link oembed-card-description-link"><%=renderer.getDescription() %></a></p>
+            </div>
+          <%
         } else {
           %>trying to embed this stuff<%
         }
