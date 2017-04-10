@@ -5,9 +5,38 @@
 --%><%
 %><%@include file="/libs/foundation/global.jsp"%><%
 %><%@page import="com.adobe.cq.components.oembed.OEmbedRenderer,
-    com.adobe.cq.components.oembed.OEmbedType" %><%
+  com.adobe.cq.components.oembed.OEmbedType,
+  com.day.cq.wcm.api.WCMMode" %><%
+    
+    boolean isEdit = WCMMode.fromRequest(request) == WCMMode.EDIT;
+    String url = properties.get("webpage", String.class);
+    if ((url==null||url.length()==0)&&isEdit) {
+      %><strong class="error">Please configure the URL to embed</strong><%
+    } else {
+      OEmbedRenderer renderer = new OEmbedRenderer();
+      boolean found = renderer.discoverLink(url);
+      if ((!found||renderer.getType()==null)&&isEdit) {
+        %><strong class="error">URL <%=url %> cannot be embedded.</strong><%
+      } else if (found&&renderer.getType()!=null) {
+        if (renderer.getType()==OEmbedType.RICH) {
+          %>
+            <div class="oembed-rich">
+              <%= renderer.getHTML() %>
+            </div>
+          <%
+        } else {
+          %>trying to embed this stuff<%
+        }
+      }
+    }
+
+%>
+
+<%--
+<%
+      
    	String endpoint = properties.get("endpoint", String.class);
-	String url = properties.get("url", String.class);
+	
    	String webpage = properties.get("webpage", String.class);
 	OEmbedRenderer renderer = new OEmbedRenderer();
 	boolean found = false;
@@ -41,3 +70,4 @@
 %><p style="border">Please configure OEmbed URL</p><%
     }
 %></div>
+--%>
