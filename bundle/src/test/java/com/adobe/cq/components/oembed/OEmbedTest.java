@@ -85,16 +85,23 @@ public class OEmbedTest {
 		
 	}
   
+  
+  
+  @Test
+  public void testTwitterCardsMedium() throws Exception {
+    String url = "https://medium.com/adobe-io/what-event-based-architectures-mean-for-application-integration-662932169d28";
+    OEmbedRenderer renderer = new OEmbedRenderer();
+    assertTrue(renderer.discoverLink(url));
+    assertEquals(OEmbedType.CARD, renderer.getType());
+  }
+  
+  
   @Test
   public void testTwitterCards() throws Exception {
     String url = "http://www.spiegel.de/wissenschaft/natur/great-barrier-reef-zwei-drittel-der-korallen-drohen-abzusterben-a-1142645.html";
     OEmbedRenderer renderer = new OEmbedRenderer();
-    try {
-      assertTrue(renderer.discoverLink(url));
-    } catch (Exception e) {
-      e.printStackTrace();
-      fail("Can't");
-    }
+    assertTrue(renderer.discoverLink(url));
+    assertEquals(OEmbedType.CARD, renderer.getType());
   }
 
 	@Test

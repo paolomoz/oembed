@@ -71,8 +71,10 @@ public class OEmbedRenderer implements OEmbedLookup {
         try {
 			method = new GetMethod(url);
 	    	method.setFollowRedirects(true);
+        method.addRequestHeader("User-Agent", "AEM 6.3 OEmbed Client");
 	    	client.executeMethod(method);
 	    	InputStream input = method.getResponseBodyAsStream();
+        
         //first of all, parse the document
 	    	List<Link> links = linkFinder.findLinks(input);
         //if no OEmbed links have been found, try the configured OEmbed providers, one by one
