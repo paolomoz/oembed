@@ -27,4 +27,25 @@
         </items>
       </content>
     </cq:dialog>
+    <cq:design_dialog jcr:primaryType="nt:unstructured" jcr:title="Embed" sling:resourceType="cq/gui/components/authoring/dialog" jcr:description="Content policy for embedding content">
+      <content jcr:primaryType="nt:unstructured" sling:resourceType="granite/ui/components/coral/foundation/container">
+        <items jcr:primaryType="nt:unstructured">
+          <tabs jcr:primaryType="nt:unstructured" maximized="true" sling:resourceType="granite/ui/components/coral/foundation/tabs">
+            <items jcr:primaryType="nt:unstructured">
+              <properties jcr:primaryType="nt:unstructured" jcr:title="Main" margin="true" sling:resourceType="granite/ui/components/coral/foundation/fixedcolumns">
+                <items jcr:primaryType="nt:unstructured">
+                  <content jcr:primaryType="nt:unstructured" margin="false" sling:resourceType="granite/ui/components/coral/foundation/container">
+                    <items jcr:primaryType="nt:unstructured">
+                      <allowedSites jcr:primaryType="nt:unstructured" fieldDescription="If you set a value here, only pages from the listed sites can be embedded." fieldLabel="Allowed sites" sling:resourceType="granite/ui/components/coral/foundation/form/multifield">
+                        <field jcr:primaryType="nt:unstructured" name="./allowedSites" required="true" sling:resourceType="granite/ui/components/coral/foundation/form/textfield"/>
+                      </allowedSites>
+                    </items>
+                  </content>
+                </items>
+              </properties>
+            </items>
+          </tabs>
+        </items>
+        </content>
+    </cq:design_dialog>
   </jcr:root>
