@@ -13,7 +13,7 @@
     if ((url==null||url.length()==0)&&isEdit) {
       %><strong class="error">Please configure the URL to embed</strong><%
     } else {
-      OEmbedRenderer renderer = new OEmbedRenderer();
+      OEmbedRenderer renderer = (OEmbedRenderer) sling.getService(com.adobe.cq.components.oembed.OEmbedLookup.class);
       boolean found = renderer.discoverLink(url);
       if ((!found||renderer.getType()==null)&&isEdit) {
         %><strong class="error">URL <%=url %> cannot be embedded.</strong><%

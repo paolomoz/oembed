@@ -1,5 +1,7 @@
 package com.adobe.cq.components.oembed;
 
+import java.util.List;
+
 public interface OEmbedLookup {
-  public String[] getOEmbedEndpoints();
+  public List<String> getOEmbedEndpoints();
 }

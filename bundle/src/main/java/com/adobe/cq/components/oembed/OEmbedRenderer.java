@@ -6,6 +6,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.List;
 import java.util.Map;
+import java.util.Arrays;
 
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpMethod;
@@ -34,25 +35,28 @@ public class OEmbedRenderer implements OEmbedLookup {
   
   @Property(value={"http://noembed.com/embed"}, unbounded = PropertyUnbounded.ARRAY, label = "OEmbed Lookup endpoints", cardinality = 5, description = "Enter additional URLs to look up OEmbed configurations.")
   private static final String ENDPOINTS = "endpoints";
-  private String[] endpoints = new String[]{};
+  private List<String> endpoints;
+  
   
   @Activate
   protected void activate(@SuppressWarnings("rawtypes") final Map context) {
-    this.endpoints = PropertiesUtil.toStringArray(context.get(ENDPOINTS));
-    System.out.println(this.endpoints.length);
+    System.out.println("activate");
+    this.endpoints = Arrays.asList(PropertiesUtil.toStringArray(context.get(ENDPOINTS)));
+    System.out.println(this.endpoints.size());
   }
   
   @Modified
   protected void modified(ComponentContext context) {
-    this.endpoints = PropertiesUtil.toStringArray(context.getProperties().get(ENDPOINTS));
-    System.out.println(this.endpoints.length);
+    System.out.println("modified");
+    this.endpoints = Arrays.asList(PropertiesUtil.toStringArray(context.getProperties().get(ENDPOINTS)));
+    System.out.println(this.endpoints.size());
   }
   
-  public String[] getOEmbedEndpoints() {
+  public List<String> getOEmbedEndpoints() {
     return this.endpoints;
   }
   
-  public void setOEmbedEndpoints(String[] endpoints) {
+  public void setOEmbedEndpoints(List<String> endpoints) {
     this.endpoints = endpoints;
   }
   
@@ -70,7 +74,7 @@ public class OEmbedRenderer implements OEmbedLookup {
 	    	InputStream input = method.getResponseBodyAsStream();
 	    	List<Link> links = linkFinder.findLinks(input);
 	    	if (links.isEmpty()) {
-          System.out.println("Finding endpoints. " + this.endpoints.length + " endpoints configured");
+          System.out.println("Finding endpoints. " + this.endpoints.size() + " endpoints configured");
           for (String endpoint : this.endpoints) {
             System.out.println("Trying " + endpoint);
             boolean found = fetchResponse(endpoint, url, null, null);
@@ -125,7 +129,11 @@ public class OEmbedRenderer implements OEmbedLookup {
 	    	client.executeMethod(method);
 	    	String responseBody = method.getResponseBodyAsString();
 	    	data = new JSONObject(responseBody);
-	    	return true;
+        if (this.getType()!=null) {
+          return true;
+        } else {
+          return false;
+        }
 		} catch (IOException e) {
 			throw new OEmbedException(e);
 		} catch (JSONException e) {

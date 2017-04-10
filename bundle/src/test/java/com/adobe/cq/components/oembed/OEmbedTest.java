@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import java.io.InputStream;
 import java.util.List;
+import java.util.Arrays;
 
 import org.apache.tika.sax.Link;
 import org.junit.Test;
@@ -58,7 +59,7 @@ public class OEmbedTest {
   public void testDefaultDiscovery() {
     String url = "https://gist.github.com/trieloff/013509c40db9860746fe3977acadb676";
     OEmbedRenderer renderer = new OEmbedRenderer();
-    renderer.setOEmbedEndpoints(new String[] {"https://runtime-preview.adobe.io/github.com/trieloff/github-oembed/master/github-oembed/embed"});
+    renderer.setOEmbedEndpoints(Arrays.asList(new String[] {"https://runtime-preview.adobe.io/github.com/trieloff/github-oembed/master/github-oembed/embed"}));
     assertTrue(renderer.discoverLink(url));
     assertEquals(OEmbedType.RICH, renderer.getType());
   }
@@ -67,7 +68,7 @@ public class OEmbedTest {
   public void testDefaultDiscoveryGist() {
     String url = "https://github.com/trieloff/github-oembed/blob/master/oembed.js";
     OEmbedRenderer renderer = new OEmbedRenderer();
-    renderer.setOEmbedEndpoints(new String[] {"https://runtime-preview.adobe.io/github.com/trieloff/github-oembed/master/github-oembed/embed"});
+    renderer.setOEmbedEndpoints(Arrays.asList(new String[] {"https://runtime-preview.adobe.io/github.com/trieloff/github-oembed/master/github-oembed/embed"}));
     assertTrue(renderer.discoverLink(url));
     assertEquals(OEmbedType.RICH, renderer.getType());
   }
