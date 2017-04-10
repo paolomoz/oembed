@@ -8,10 +8,26 @@
   com.adobe.cq.components.oembed.LinkDiscoverer,
   com.adobe.cq.components.oembed.OEmbedType,
   com.day.cq.wcm.api.WCMMode" %><%
+    String[] whitelist = currentStyle.get("allowedSites", new String[0]);
     
     boolean isEdit = WCMMode.fromRequest(request) == WCMMode.EDIT;
     String url = properties.get("webpage", String.class);
-    if ((url==null||url.length()==0)&&isEdit) {
+    
+    boolean allowed = true;
+    if (whitelist.length>0&&url!=null) {
+      allowed = false;
+      for (String site : whitelist) {
+        if(url.indexOf(site.toLowerCase() + "/")>0) {
+          allowed = true;
+          break;
+        }
+      }
+    }
+    if (!allowed) {
+      if (isEdit) {
+        %><strong class="error">Your content policy forbids embedding content from this site.</strong><%
+      }
+    } else if ((url==null||url.length()==0)&&isEdit) {
       %><strong class="error">Please configure the URL to embed</strong><%
     } else {
       LinkDiscoverer renderer = ((OEmbedRenderer) sling.getService(com.adobe.cq.components.oembed.OEmbedLookup.class)).getLinkDiscoverer();
