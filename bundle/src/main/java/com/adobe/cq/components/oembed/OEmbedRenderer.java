@@ -31,30 +31,37 @@ public class OEmbedRenderer implements OEmbedLookup {
 	private HttpClient client = new HttpClient();
 	private LinkFinder linkFinder = new LinkFinder();
 	private final Logger logger = LoggerFactory. getLogger(OEmbedRenderer.class);
-  public static String DEFAULT_ENDPOINT = "http://noembed.com/embed";
   
-  @Property(value={"http://noembed.com/embed"}, unbounded = PropertyUnbounded.ARRAY, label = "OEmbed Lookup endpoints", cardinality = 50, description = "Enter additional URLs to look up OEmbed configurations.")
+  @Property(value={"http://noembed.com/embed"}, unbounded = PropertyUnbounded.ARRAY, label = "OEmbed Lookup endpoints", cardinality = 5, description = "Enter additional URLs to look up OEmbed configurations.")
   private static final String ENDPOINTS = "endpoints";
-  private String[] endpoints;
+  private String[] endpoints = new String[]{};
   
   @Activate
   protected void activate(@SuppressWarnings("rawtypes") final Map context) {
     this.endpoints = PropertiesUtil.toStringArray(context.get(ENDPOINTS));
+    System.out.println(this.endpoints.length);
   }
   
   @Modified
   protected void modified(ComponentContext context) {
     this.endpoints = PropertiesUtil.toStringArray(context.getProperties().get(ENDPOINTS));
+    System.out.println(this.endpoints.length);
   }
   
   public String[] getOEmbedEndpoints() {
     return this.endpoints;
   }
+  
+  public void setOEmbedEndpoints(String[] endpoints) {
+    this.endpoints = endpoints;
+  }
+  
   /**
    * Attempts to find a OEmbed link through auto-discovery, then falls back to
    * the configured endpoints.
    */
 	public boolean discoverLink(String url) {
+    System.out.println("Getting URL: " + url);
 		HttpMethod method = null;
         try {
 			method = new GetMethod(url);
@@ -63,9 +70,13 @@ public class OEmbedRenderer implements OEmbedLookup {
 	    	InputStream input = method.getResponseBodyAsStream();
 	    	List<Link> links = linkFinder.findLinks(input);
 	    	if (links.isEmpty()) {
+          System.out.println("Finding endpoints. " + this.endpoints.length + " endpoints configured");
           for (String endpoint : this.endpoints) {
-            boolean found = fetchResponse(OEmbedRenderer.DEFAULT_ENDPOINT, url, null, null);
+            System.out.println("Trying " + endpoint);
+            boolean found = fetchResponse(endpoint, url, null, null);
+            
             if (found) {
+              System.out.println(endpoint + " found");
               return true;
             }
           }
@@ -130,7 +141,8 @@ public class OEmbedRenderer implements OEmbedLookup {
 		try {
 			return OEmbedType.valueOf(data.getString("type").toUpperCase());
 		} catch (JSONException e) {
-			throw new OEmbedException("No 'type' attribute in JSON input", e);
+      logger.warn("No 'type' attribute in JSON input " + data.toString());
+      return null;
 		}
 	}
 	
