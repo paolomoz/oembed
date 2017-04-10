@@ -76,9 +76,7 @@ public class OEmbedLinkHandler extends DefaultHandler {
 			} else if ("meta".equals(local)) {
         String metaName = attributes.getValue("", "name");
         String metaContent = attributes.getValue("", "content");
-        //System.out.println("meta name="+metaName+" content="+metaContent);
         if ("twitter:title".equals(metaName)||"og:title".equals(metaName)) {
-          //System.out.println("HEY HEY HEY I HAVE FOUND A CARD HEY HEY HEY");
           this.title = metaContent;
           this.card = true;
         } else if ("twitter:description".equals(metaName)||"og:description".equals(metaName)) {

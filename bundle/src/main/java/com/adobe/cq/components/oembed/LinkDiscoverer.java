@@ -37,7 +37,7 @@ public class LinkDiscoverer {
    * the configured endpoints.
    */
 	public boolean discoverLink(String url) {
-    System.out.println("Getting URL: " + url);
+    logger.debug("Getting URL: " + url);
 		HttpMethod method = null;
         try {
 			method = new GetMethod(url);
@@ -51,23 +51,22 @@ public class LinkDiscoverer {
         //if no OEmbed links have been found, try the configured OEmbed providers, one by one
 	    	if (links.isEmpty()) {
           if (this.endpoints!=null) {
-            System.out.println("Finding endpoints. " + this.endpoints.size() + " endpoints configured");
+            logger.debug("Finding endpoints. " + this.endpoints.size() + " endpoints configured");
             for (String endpoint : this.endpoints) {
-              System.out.println("Trying " + endpoint);
+              logger.debug("Trying " + endpoint);
               boolean found = fetchResponse(endpoint, url, null, null);
               
               if (found) {
-                System.out.println(endpoint + " found");
+                logger.debug(endpoint + " found");
                 return true;
               }
             }
           } else {
-            System.out.println("No OEmbed endpoints configured");
+            logger.debug("No OEmbed endpoints configured");
           }
           //if no OEmbed representation can be found, try Twitter cards or Open Graph meta tags
           if (this.linkFinder.getLinkHandler().hasCard()) {
             this.card = this.linkFinder.getLinkHandler();
-            System.out.println("Hey, I've found a Twitter card!");
             return true;
           } else if (this.linkFinder.getLinkHandler().hasTitle()) {
             //last fallback: just use the title tag
