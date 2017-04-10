@@ -1,4 +1,4 @@
-# AEM Embed Component
+# AEM Ober-Embed Component
 
 Do you love having AEM sites with rich content, but hate creating rich content? *Why write content when you can just stea^H embed it?*
 
@@ -29,3 +29,8 @@ mvn -P installPackage install
 ## Thanks
 * [Paolo](https://github.com/paolomoz/oembed)
 * [Ugo](https://github.com/ugocei/oembed)
+
+## FAQ
+### Why is it called Ober-Embed?
+
+Because it's based on OEmbed and Uber-Embed would be too cliche.
