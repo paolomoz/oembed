@@ -8,10 +8,10 @@ Ober-Embed is a component for [Adobe Experience Manager](http://www.adobe.com/so
 * [oEmbed](http://oembed.com/) manual discovery using configured OEmbed providers (I recommend [Noembed](https://noembed.com) for Amazon, Gyfcat, XKCD)
 * [Twitter Cards](https://dev.twitter.com/cards/markup) for many new websites
 * [Facebook OpenGraph markup](https://developers.facebook.com/docs/sharing/webmasters) for most other websites
-* [Plain old HTML <title> tags](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/title) for literally any other website
+* [Plain old HTML title tags](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/title) for literally any other website
 
 The component can embed content, including title, description, images, videos or even interactive content (using OEmbed). Because the OEmbed providers are configurable, you can set your own providers (for instance using [Adobe I/O Runtime](https://www.adobe.io/apis/cloudplatform/runtime.html)) or switch providers if you need more sites supported. The OEmbed providers are configured in the OSGi console, so that authors only have to know the URL of the page they want to embed.
-  
+
 ## Installation
 
 To install the component:
@@ -20,11 +20,49 @@ To install the component:
 ```
 mvn -P installPackage install
 ```
-* Enable the component for your page in [design view](http://dev.day.com/docs/en/cq/current/wcm/working_with_cq_wcm/using_edit_designandpreviewmodes.html#Design Mode).
 
-## Todo
-- [ ] white list of sites in design configuration
-- [ ] screen shots of embedded sites
+## Usage
+
+### Before You Start Editing
+You have to enable the component in design mode for the templates where you want to allow using embedded content. Open a template of your choice and drag the component into the *Layout Container*.
+
+![Embed component in layout container of We.Retail's hero page](docs/enable-component.png)
+
+#### (Optional) White List Sites to Embed Content from
+
+By default, the AEM Embed component allows embedding content from any site, but you can enable further restrictions through content policies. Tap on the *Configuration* button on the *Embed* label to open the Content Policy Configuration.
+
+![Configuring a white list of allowed sites for the Embed component](docs/set-policy.png)
+
+You can manage multiple content policies for different parts f your site. If you don't set any allowed sites, then content from anywhere can be embedded.
+
+## Embedding Content
+
+To embed content, open the page you want to edit in AEM's editor  and drag the Embed component into the appropriate layout container. Tap the component, and then the *settings wrench* to open the edit dialog. Enter (or copy & paste) the URL of the page you'd like to embed and tap the checkmark button to save.
+
+![Pasting a Twitter link to embed a tweet](docs/edit-twitter.png)
+
+Because Twitter supports OEmbed auto discovery, a rich representation of the tweet will be added to your page.
+
+![We.Retail hero page with an embedded tweet](docs/embed-twitter.png)
+
+## Advanced Configuration
+
+Not all sites that you would like to embed have support for OEmbed auto discovery, which means that the embedded content will not be interactive. 
+
+Ober-Embed allows the configuration of additional OEmbed providers (these are websites that translate the URL of a page into an embeddable version). To do so, open the AEM OSGi console and find the *OEmbedRenderer* component.
+
+![Adding additional Embed Lookup endpoints](docs/configure-oembed.png)
+
+The OEmbed component will try all endpoints in order until it has found one that provides an embeddable representation. This means, do not configure too many providers, as it may slow down your AEM instance.
+
+## Performance Considerations
+
+Embedding requires AEM to retrieve the content of each embedded page, which means your own site will be as slow as the slowest site you are embedding from.
+
+![Embedding is slow. You have been warned](docs/performance.png)
+
+This means for you: **do not forget to set up proper caching**. Having external, rich content is great. Having a slow site is not great.
 
 ## Thanks
 * [Paolo](https://github.com/paolomoz/oembed)
