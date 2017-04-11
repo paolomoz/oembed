@@ -56,6 +56,14 @@ Ober-Embed allows the configuration of additional OEmbed providers (these are we
 
 The OEmbed component will try all endpoints in order until it has found one that provides an embeddable representation. This means, do not configure too many providers, as it may slow down your AEM instance.
 
+### Example: Embedding GitHubGist
+
+GitHubGist is a great site, but they have dropped support for OEmbed auto discovery a few years ago. If you are running an OEmbed provider that is using the GitHub API (see (github-oembed)[https://github.com/trieloff/github-oembed] for an example), you can embed Gists or files from GitHub.
+
+![Pasting a Gist URL into the Embed component](docs/edit-gist.png)
+
+![The embedded Gist in your site](docs/embed-gist.png)
+
 ## Performance Considerations
 
 Embedding requires AEM to retrieve the content of each embedded page, which means your own site will be as slow as the slowest site you are embedding from.
