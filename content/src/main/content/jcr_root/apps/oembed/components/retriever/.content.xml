@@ -2,11 +2,10 @@
 <jcr:root xmlns:sling="http://sling.apache.org/jcr/sling/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0"
     jcr:primaryType="cq:Component"
     jcr:title="Retrieve"
-    cq:icon="globeCheck"
+    cq:icon="feedAdd"
     jcr:description="Retrieve content to embed from an RSS or Atom feed."
     sling:resourceSuperType="foundation/components/parbase"
-    allowedParents="[*/parsys]"
-    componentGroup="General">
+    componentGroup="External">
     <cq:htmlTag jcr:primaryType="nt:unstructured" cq:tagName="div" class="cmp cmp-retriever"/>
     <cq:editConfig jcr:primaryType="nt:unstructured">
       <cq:inplaceEditing jcr:primaryType="nt:unstructured" active="false"/>
@@ -16,12 +15,22 @@
         <items jcr:primaryType="nt:unstructured">
           <column jcr:primaryType="nt:unstructured" sling:resourceType="granite/ui/components/coral/foundation/container">
             <items jcr:primaryType="nt:unstructured">
-              <url
+              <source
                     jcr:primaryType="nt:unstructured"
                     fieldDescription="URL of an RSS or Atom feed that supports oEmbed auto-discovery (e.g. YouTube)"
                     fieldLabel="Feed address"
-                    name="./feed"
+                    name="./source"
                     sling:resourceType="granite/ui/components/coral/foundation/form/textfield"/>
+              <interval
+                    jcr:primaryType="nt:unstructured"
+                    name="./interval"
+                    value="500"
+                    sling:resourceType="granite/ui/components/coral/foundation/form/hidden"/>
+              <mixin
+                    jcr:primaryType="nt:unstructured"
+                    name="./jcr:mixinTypes"
+                    value="cq:PollConfig"
+                    sling:resourceType="granite/ui/components/coral/foundation/form/hidden"/>
             </items>
           </column>
         </items>
