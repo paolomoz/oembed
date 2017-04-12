@@ -21,6 +21,12 @@
                     fieldLabel="Feed address"
                     name="./source"
                     sling:resourceType="granite/ui/components/coral/foundation/form/textfield"/>
+              <items
+                    jcr:primaryType="nt:unstructured"
+                    fieldDescription="Maximum number of items to embed"
+                    fieldLabel="Items to embed"
+                    name="./items"
+                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"/>
               <interval
                     jcr:primaryType="nt:unstructured"
                     name="./interval"
