@@ -26,7 +26,10 @@
                     fieldDescription="Maximum number of items to embed"
                     fieldLabel="Items to embed"
                     name="./items"
-                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"/>
+                    sling:resourceType="granite/ui/components/coral/foundation/form/numberfield"
+                    min="0"
+                    step="1"
+                    defaultValue="3"/>
               <interval
                     jcr:primaryType="nt:unstructured"
                     name="./interval"
