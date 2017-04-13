@@ -50,7 +50,9 @@
         } else if (renderer.getType()==OEmbedType.CARD) {
           %>
             <div class="oembed-card">
+              <% if (null!=renderer.getThumbnailURL()) { %>
               <a href="<%=url %>" class="oembed-card-link oembed-card-image-link"><img class="oembed-card-image" src="<%=renderer.getThumbnailURL() %>"></a>
+              <% } %>
               <h2 class="oembed-card-title"><a href="<%=url %>" class="oembed-card-link oembed-card-title-link"><%=renderer.getTitle() %></a></h2>
               <p class="oembed-card-description"><a href="<%=url %>" class="oembed-card-link oembed-card-description-link"><%=renderer.getHTML() %></a></p>
             </div>
