@@ -44,6 +44,15 @@
                 <configuration>
                     <instructions>
                         <Bundle-SymbolicName>com.adobe.cq.components.oembed-bundle</Bundle-SymbolicName>
+                        <Embed-Dependency>rome,rome-utils</Embed-Dependency>
+                        <Import-Package>
+                          !org.jdom2.*,
+                          !org.jdom2.filter.*,
+                          !org.jdom2.input.*,
+                          !org.jdom2.input.sax.*,
+                          !org.jdom2.output.*,
+                          *
+                        </Import-Package>
                     </instructions>
                 </configuration>
             </plugin>
@@ -110,6 +119,11 @@
             <groupId>com.rometools</groupId>
             <artifactId>rome</artifactId>
             <version>1.7.1</version>
+        </dependency>
+        <dependency>
+          <groupId>com.rometools</groupId>
+          <artifactId>rome-utils</artifactId>
+          <version>1.7.1</version>
         </dependency>
         <dependency>
             <groupId>com.day.cq</groupId>
