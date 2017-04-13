@@ -16,15 +16,16 @@ import javax.jcr.Node;
 import javax.jcr.NodeIterator;
 import javax.jcr.RepositoryException;
 import java.util.Map;
+import java.util.List;
+import java.util.ArrayList;
 
 @Component(metatype = false, enabled = true, label = "OEmbed feed importer")
-@Service
+@Service(value = Importer.class)
+@Property(name=Importer.SCHEME_PROPERTY, value="embed", propertyPrivate = true)
 public class FeedEmbedImporter extends HCImporter implements Importer {   
   private static final String DEFAULT_SCHEME = "embed";
   
-  @Property(label = "Importer Scheme",
-          description = "Scheme value that will be used for this importer. Must be unique across importers.",
-          value = DEFAULT_SCHEME)
+  
   private static final String PROP_SCHEME = Importer.SCHEME_PROPERTY;
   
   private String scheme;
@@ -37,6 +38,7 @@ public class FeedEmbedImporter extends HCImporter implements Importer {
   
   public void importData(String scheme, InputStream data,
     String characterEncoding, Resource target) throws IOException {
+      System.out.println("Getting feed with character encoding: " + characterEncoding);
       try {
         SyndFeedInput input = new SyndFeedInput();
         SyndFeed feed = input.build(new InputStreamReader(data, characterEncoding));
@@ -66,6 +68,11 @@ public class FeedEmbedImporter extends HCImporter implements Importer {
       } catch (RepositoryException re) {
         throw new IOException(re);
       }
-      
     }
+    
+  public List<String> getFeedTitles(InputStream data,
+  String characterEncoding) {
+    return new ArrayList<String>();
+  }
+    
 }
