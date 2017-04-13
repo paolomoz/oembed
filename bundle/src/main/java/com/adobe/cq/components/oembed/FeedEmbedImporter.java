@@ -62,6 +62,7 @@ public class FeedEmbedImporter extends HCImporter implements Importer {
           child.setProperty("sling:resourceType","oembed/components/embedder");
           child.setProperty("webpage", link);
         }
+        System.out.println("Saving this stuff as: " + node.getSession().getUserID());
         node.getSession().save();
       } catch (FeedException fe) {
         throw new IOException(fe);
