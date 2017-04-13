@@ -33,7 +33,7 @@
               <interval
                     jcr:primaryType="nt:unstructured"
                     name="./interval"
-                    value="500"
+                    value="60"
                     sling:resourceType="granite/ui/components/coral/foundation/form/hidden"/>
               <intervalType
                     jcr:primaryType="nt:unstructured"
