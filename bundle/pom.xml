@@ -44,13 +44,14 @@
                 <configuration>
                     <instructions>
                         <Bundle-SymbolicName>com.adobe.cq.components.oembed-bundle</Bundle-SymbolicName>
-                        <Embed-Dependency>rome,rome-utils</Embed-Dependency>
+                        <Embed-Dependency>rome,rome-utils,jdom2</Embed-Dependency>
                         <Import-Package>
-                          !org.jdom2.*,
                           !org.jdom2.filter.*,
-                          !org.jdom2.input.*,
                           !org.jdom2.input.sax.*,
                           !org.jdom2.output.*,
+                          !org.jaxen.*,
+                          !org.jaxen.saxpath.*,
+                          !org.jaxen.util.*,
                           *
                         </Import-Package>
                     </instructions>
@@ -124,6 +125,11 @@
           <groupId>com.rometools</groupId>
           <artifactId>rome-utils</artifactId>
           <version>1.7.1</version>
+        </dependency>
+        <dependency>
+          <groupId>org.jdom</groupId>
+          <artifactId>jdom2</artifactId>
+          <version>2.0.6</version>
         </dependency>
         <dependency>
             <groupId>com.day.cq</groupId>
