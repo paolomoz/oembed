@@ -55,6 +55,7 @@
               <% } %>
               <h2 class="oembed-card-title"><a href="<%=url %>" class="oembed-card-link oembed-card-title-link"><%=renderer.getTitle() %></a></h2>
               <p class="oembed-card-description"><a href="<%=url %>" class="oembed-card-link oembed-card-description-link"><%=renderer.getHTML() %></a></p>
+              <a href="<%=url %>" class="oembed-card-link oembed-card-website-link"><%=url.replaceAll(".*://(www\\.)?","").replaceAll("/.*","") %></a>
             </div>
           <%
         } else if (renderer.getType()==OEmbedType.PLAIN) {
