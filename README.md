@@ -72,6 +72,10 @@ Embedding requires AEM to retrieve the content of each embedded page, which mean
 
 This means for you: **do not forget to set up proper caching**. Having external, rich content is great. Having a slow site is not great.
 
+## Todo
+
+- [] document polling importer
+
 ## Thanks
 * [Paolo](https://github.com/paolomoz/oembed)
 * [Ugo](https://github.com/ugocei/oembed)
