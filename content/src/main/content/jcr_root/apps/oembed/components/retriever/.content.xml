@@ -35,6 +35,11 @@
                     name="./interval"
                     value="500"
                     sling:resourceType="granite/ui/components/coral/foundation/form/hidden"/>
+              <intervalType
+                    jcr:primaryType="nt:unstructured"
+                    name="./interval@TypeHint"
+                    value="Long"
+                    sling:resourceType="granite/ui/components/coral/foundation/form/hidden"/>
               <mixin
                     jcr:primaryType="nt:unstructured"
                     name="./jcr:mixinTypes"
