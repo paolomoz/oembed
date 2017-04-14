@@ -12,6 +12,8 @@ Ober-Embed is a component for [Adobe Experience Manager](http://www.adobe.com/so
 
 The component can embed content, including title, description, images, videos or even interactive content (using OEmbed). Because the OEmbed providers are configurable, you can set your own providers (for instance using [Adobe I/O Runtime](https://www.adobe.io/apis/cloudplatform/runtime.html)) or switch providers if you need more sites supported. The OEmbed providers are configured in the OSGi console, so that authors only have to know the URL of the page they want to embed.
 
+**In addition, this project comes with a component that allows automatic retrieval of embeddable content using RSS feeds.** You set up a feed address and AEM will automatically embed previews of the most recent blog posts and link them to the blog. 
+
 ## Installation
 
 To install the component:
@@ -36,6 +38,20 @@ By default, the AEM Embed component allows embedding content from any site, but 
 
 You can manage multiple content policies for different parts f your site. If you don't set any allowed sites, then content from anywhere can be embedded.
 
+#### (Optional) Configure Maximum Number of Snippets to Retrieve
+
+The AEM Retrieve component (which you can enable in the same way as the Embed component is enabled) supports only one configuration setting: the maximum number of snippets to embed.
+
+The default value is three, but can be overridden by authors on the page.
+
+![Raising the limit of feed entries to retrieve](docs/cofigure-retriever.png)
+
+##### Important: Set Permissions for `polling-importer`
+
+In AEM 6.3, the `polling-importer` service account does not have the necessary default permissions to create content underneath the `/content` tree. This means, the Retriever component will not be able to retrieve content and save it in the repository.
+
+To fix this, go to AEM Security settings and change the permissions of the `polling-importer` service account so that it has Create, Update and Delete permission in the locations where you want to enable automated embedding.
+
 ## Embedding Content
 
 To embed content, open the page you want to edit in AEM's editor  and drag the Embed component into the appropriate layout container. Tap the component, and then the *settings wrench* to open the edit dialog. Enter (or copy & paste) the URL of the page you'd like to embed and tap the checkmark button to save.
@@ -56,6 +72,18 @@ Ober-Embed allows the configuration of additional OEmbed providers (these are we
 
 The OEmbed component will try all endpoints in order until it has found one that provides an embeddable representation. This means, do not configure too many providers, as it may slow down your AEM instance.
 
+## Automated Embedding
+
+If you want to keep a small number of automatically updating snippets, for example a list of recent blog posts published on an external blog, you can use the *Retrieve* component.
+
+![Adding the Retrieve component to a layout](docs/add-retriever.png)
+
+Once the component has been added, configure it by clicking on the settings wrench and then enter the URL of an Atom or RSS feed. You can also set the number of items to embed. If you don't change this setting, the three most recent posts will be shown.
+
+![Setting the URL to retrieve content from](docs/set-url-retriever.png)
+
+The importer is using the `embed:` URL scheme, so don't worry about having this in front of the URL.
+
 ### Example: Embedding GitHubGist
 
 GitHubGist is a great site, but they have dropped support for OEmbed auto discovery a few years ago. If you are running an OEmbed provider that is using the GitHub API (see (github-oembed)[https://github.com/trieloff/github-oembed] for an example), you can embed Gists or files from GitHub.
@@ -71,10 +99,6 @@ Embedding requires AEM to retrieve the content of each embedded page, which mean
 ![Embedding is slow. You have been warned](docs/performance.png)
 
 This means for you: **do not forget to set up proper caching**. Having external, rich content is great. Having a slow site is not great.
-
-## Todo
-
-- [] document polling importer
 
 ## Thanks
 * [Paolo](https://github.com/paolomoz/oembed)
