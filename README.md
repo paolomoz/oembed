@@ -44,7 +44,7 @@ The AEM Retrieve component (which you can enable in the same way as the Embed co
 
 The default value is three, but can be overridden by authors on the page.
 
-![Raising the limit of feed entries to retrieve](docs/cofigure-retriever.png)
+![Raising the limit of feed entries to retrieve](docs/configure-retriever.png)
 
 ##### Important: Set Permissions for `polling-importer`
 
