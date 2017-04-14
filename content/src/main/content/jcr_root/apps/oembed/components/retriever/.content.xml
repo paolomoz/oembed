@@ -20,7 +20,7 @@
                     fieldDescription="URL of an RSS or Atom feed that supports oEmbed auto-discovery (e.g. YouTube)"
                     fieldLabel="Feed address"
                     name="./source"
-                    sling:resourceType="granite/ui/components/coral/foundation/form/textfield"/>
+                    sling:resourceType="oembed/components/feedfield"/>
               <items
                     jcr:primaryType="nt:unstructured"
                     fieldDescription="Maximum number of items to embed"
