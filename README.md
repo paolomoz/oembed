@@ -86,7 +86,7 @@ The importer is using the `embed:` URL scheme, so don't worry about having this 
 
 ### Example: Embedding GitHubGist
 
-GitHubGist is a great site, but they have dropped support for OEmbed auto discovery a few years ago. If you are running an OEmbed provider that is using the GitHub API (see (github-oembed)[https://github.com/trieloff/github-oembed] for an example), you can embed Gists or files from GitHub.
+GitHubGist is a great site, but they have dropped support for OEmbed auto discovery a few years ago. If you are running an OEmbed provider that is using the GitHub API, you can embed Gists or files from GitHub. Check out see [github-oembed](https://github.com/trieloff/github-oembed) for an example.
 
 ![Pasting a Gist URL into the Embed component](docs/edit-gist.png)
 
