@@ -100,6 +100,13 @@ Embedding requires AEM to retrieve the content of each embedded page, which mean
 
 This means for you: **do not forget to set up proper caching**. Having external, rich content is great. Having a slow site is not great.
 
+# Contributions Welcome
+
+Some ideas I did not manage to implement:
+- better timeout handling
+- local caching
+- bring classic design dialog up to par with touch UU
+
 ## Thanks
 * [Paolo](https://github.com/paolomoz/oembed)
 * [Ugo](https://github.com/ugocei/oembed)
