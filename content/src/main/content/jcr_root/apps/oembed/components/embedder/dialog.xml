@@ -13,58 +13,11 @@
             <items jcr:primaryType="cq:WidgetCollection">
                 <url
                     jcr:primaryType="cq:Widget"
+                    fieldDescription="Provide the URL of a page that supports oEmbed auto-discovery"
                     fieldLabel="Web page address"
                     name="./webpage"
                     xtype="textfield"/>
             </items>
         </tab1>
-        <tab2
-            jcr:primaryType="cq:Widget"
-            anchor="100%"
-            title="Link"
-            xtype="panel">
-            <items jcr:primaryType="cq:WidgetCollection">
-                <endpoint
-                    jcr:primaryType="cq:Widget"
-                    fieldLabel="API Endpoint"
-                    name="./endpoint"
-                    type="combobox"
-                    xtype="selection">
-                    <options jcr:primaryType="cq:WidgetCollection">
-                        <Flickr
-                            jcr:primaryType="nt:unstructured"
-                            text="http://www.flickr.com/services/oembed/"
-                            value="http://www.flickr.com/services/oembed/"/>
-                        <YouTube
-                            jcr:primaryType="nt:unstructured"
-                            text="http://www.youtube.com/oembed"
-                            value="http://www.youtube.com/oembed"/>
-                        <Hulu
-                            jcr:primaryType="nt:unstructured"
-                            text="http://www.hulu.com/api/oembed.json"/>
-                        <Vimeo
-                            jcr:primaryType="nt:unstructured"
-                            text="http://vimeo.com/api/oembed.json"/>
-                        <SmugMug
-                            jcr:primaryType="nt:unstructured"
-                            text="http://api.smugmug.com/services/oembed/"/>
-                        <SlideShare
-                            jcr:primaryType="nt:unstructured"
-                            text="http://www.slideshare.net/api/oembed/2"/>
-                    </options>
-                </endpoint>
-                <url
-                    jcr:primaryType="cq:Widget"
-                    fieldLabel="URL"
-                    name="./url"
-                    xtype="textfield"/>
-                <max
-                    jcr:primaryType="cq:Widget"
-                    fieldLabel="Maximal Size"
-                    heightParameter="./maxHeight"
-                    widthParameter="./maxWidth"
-                    xtype="sizefield"/>
-            </items>
-        </tab2>
     </items>
 </jcr:root>

@@ -6,9 +6,9 @@
     <!-- P A R E N T P R O J E C T D E S C R I P T I O N -->
     <!-- ====================================================================== -->
     <parent>
-        <groupId>com.adobe.aem.wcm.components</groupId>
+        <groupId>com.adobe.cq.components</groupId>
         <artifactId>oembed</artifactId>
-        <version>1.0</version>
+        <version>1.2</version>
     </parent>
 
     <!-- ====================================================================== -->
@@ -43,7 +43,17 @@
                 <extensions>true</extensions>
                 <configuration>
                     <instructions>
-                        <Bundle-SymbolicName>com.adobe.aem.wcm.components.oembed-bundle</Bundle-SymbolicName>
+                        <Bundle-SymbolicName>com.adobe.cq.components.oembed-bundle</Bundle-SymbolicName>
+                        <Embed-Dependency>rome,rome-utils,jdom2</Embed-Dependency>
+                        <Import-Package>
+                          !org.jdom2.filter.*,
+                          !org.jdom2.input.sax.*,
+                          !org.jdom2.output.*,
+                          !org.jaxen.*,
+                          !org.jaxen.saxpath.*,
+                          !org.jaxen.util.*,
+                          *
+                        </Import-Package>
                     </instructions>
                 </configuration>
             </plugin>
@@ -92,13 +102,52 @@
         <dependency>
         	<groupId>org.apache.tika</groupId>
         	<artifactId>tika-parsers</artifactId>
-        	<version>1.3</version>
+        	<version>1.18</version>
+        </dependency>
+        <dependency>
+        	<groupId>org.apache.sling</groupId>
+        	<artifactId>org.apache.sling.commons.osgi</artifactId>
+        	<version>2.4.0</version>
         </dependency>
         <dependency>
         	<groupId>org.slf4j</groupId>
         	<artifactId>slf4j-simple</artifactId>
         	<version>1.7.2</version>
         	<scope>test</scope>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/com.rometools/rome -->
+        <dependency>
+            <groupId>com.rometools</groupId>
+            <artifactId>rome</artifactId>
+            <version>1.7.1</version>
+        </dependency>
+        <dependency>
+          <groupId>com.rometools</groupId>
+          <artifactId>rome-utils</artifactId>
+          <version>1.7.1</version>
+        </dependency>
+        <dependency>
+          <groupId>org.jdom</groupId>
+          <artifactId>jdom2</artifactId>
+          <version>2.0.6</version>
+        </dependency>
+        <dependency>
+            <groupId>com.day.cq</groupId>
+            <artifactId>cq-polling-importer</artifactId>
+            <version>5.10.8</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+          <groupId>org.apache.sling</groupId>
+          <artifactId>org.apache.sling.api</artifactId>
+          <version>2.8.0</version>
+          <scope>provided</scope>
+        </dependency>
+        <dependency>
+          <groupId>javax.jcr</groupId>
+          <artifactId>jcr</artifactId>
+          <version>2.0</version>
+          <scope>provided</scope>
         </dependency>
     </dependencies>
 </project>
